@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot name="quadrotor">
+
+  <link name="base_link">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0 "/>
+      <geometry>
+        <mesh filename="robot/QUADROTOR/quad.osg"/>
+      </geometry>
+    </visual>
+  </link>
+ <link name="h0">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="robot/QUADROTOR/helix.osg"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="r0" type="continuous">
+    <parent link="base_link"/>
+    <child link="h0"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="-0.172 0 -0.04"/>
+  </joint>
+ <link name="h1">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="robot/QUADROTOR/helix.osg"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="r1" type="continuous">
+    <parent link="base_link"/>
+    <child link="h1"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0 -0.172 -0.04"/>
+  </joint>
+ <link name="h2">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="robot/QUADROTOR/helix.osg"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="r2" type="continuous">
+    <parent link="base_link"/>
+    <child link="h2"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy=" 0 0 0 " xyz="0.172 0 -0.04"/>
+  </joint>
+  <link name="h3">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="robot/QUADROTOR/helix.osg"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="r3" type="continuous">
+    <parent link="base_link"/>
+    <child link="h3"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0 0.172 -0.04"/>
+  </joint>
+</robot>

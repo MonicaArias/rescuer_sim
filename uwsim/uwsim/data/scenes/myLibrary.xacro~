@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<library xmlns:xacro="http://www.ros.org/wiki/xacro" name="myLibrary">
+
+  <xacro:include filename="common.xacro" />
+  <xacro:include filename="deviceLibrary.xacro" /> 
+
+  <!-- my devices -->
+
+  <xacro:macro name="quadrotorCam" params="relativeTo x y z roll pitch yaw">
+    <xacro:simple_Vcam name="bowtech1" relativeTo="${relativeTo}" resw="640" resh="480" x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" />
+  </xacro:macro>
+
+  <xacro:macro name="quadrotorCam_iface">
+    <xacro:_VirtualCameraToROSImage cameraName="bowtech1" imageTopic="/quadrotor/camera1" infoTopic="/quadrotor/camera1_info" />
+  </xacro:macro>
+
+  <!-- my vehicles -->
+
+  <xacro:macro name="guardian" params="x y z roll pitch yaw **initialJoints">
+    <xacro:_vehicle name="guardian" file="data/scenes/gwam_ume_color.urdf"  x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.4" scaley="0.4" scalez="0.4">
+      <joints>
+        <xacro:insert_block name="initialJoints" />    
+      </joints>
+      <sensors>
+      </sensors>
+    </xacro:_vehicle>
+  </xacro:macro>
+
+  <xacro:macro name="quadrotor" params="x y z roll pitch yaw **initialJoints">
+    <xacro:_vehicle name="quadrotor" file="data/scenes/quadrotor.urdf"  x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.4" scaley="0.4" scalez="0.4">
+      <joints>
+        <xacro:insert_block name="initialJoints" />    
+      </joints>
+      <sensors>
+        <xacro:quadrotorCam relativeTo="base_link" x="0" y="0" z="0.1" roll="${1.0}" pitch="${pi}" yaw="${pi/2}" />
+      </sensors>
+    </xacro:_vehicle>
+  </xacro:macro>
+
+  <xacro:macro name="silla" params="x y z roll pitch yaw">
+    <xacro:_vehicle name="silla" file="data/scenes/silla.urdf"  x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.001" scaley="0.001" scalez="0.001">
+      <joints>
+      </joints>
+      <sensors>
+      </sensors>
+    </xacro:_vehicle>
+  </xacro:macro>
+
+  <xacro:macro name="maleta" params="x y z roll pitch yaw">
+    <xacro:_vehicle name="maleta" file="data/scenes/bomba.urdf"  x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.002" scaley="0.002" scalez="0.002">
+      <joints> 
+      </joints>
+      <sensors>
+      </sensors>
+    </xacro:_vehicle>
+  </xacro:macro>
+
+
+ <!-- my objects -->
+
+  <xacro:macro name="mesa" params="x y z roll pitch yaw">
+    <xacro:_kinObject name="mesa" file="objects/mesa.3ds" x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.01" scaley="0.01" scalez="0.01" offsetpx="0" offsetpy="0" offsetpz="0" offsetrx="0" offsetry="0" offsetrz="0" collisionShapeType="trimesh" />
+  </xacro:macro>
+
+  <xacro:macro name="mesa2" params="x y z roll pitch yaw">
+    <xacro:_kinObject name="mesa" file="objects/mesa2.3ds" x="${x}" y="${y}" z="${z}" roll="${roll}" pitch="${pitch}" yaw="${yaw}" scalex="0.002" scaley="0.002" scalez="0.002" offsetpx="0" offsetpy="0" offsetpz="0" offsetrx="0" offsetry="0" offsetrz="0" collisionShapeType="trimesh" />
+  </xacro:macro>
+
+</library>
