@@ -1,5 +1,6 @@
 # rescuer_sim
 
+Simultanous Gazebo simulation of a mobile manipulator (Guardian + Wam arm) and a Parrot Ar.Drone 2.0
 
 Dependancies:
 
