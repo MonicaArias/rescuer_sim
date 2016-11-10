@@ -1,7 +1,7 @@
 # rescuer_sim
 
 
-Dependant packages:
+Dependancies:
 
 For Autonomous Navigation of Mobile Manipulator:
 
