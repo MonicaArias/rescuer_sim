@@ -1,9 +1,0 @@
-<launch>
-
-<!-- ros_control guardian launch file -->
-  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch" />
-
- <include file="$(find turtlebot_gazebo)/launch/amcl_demo.launch" />
-
-
-</launch>
