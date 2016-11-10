@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="gwam" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <xacro:include filename="$(find guardian_description)/urdf/guardian_wam.urdf.xacro" /> 
+  <xacro:include filename="$(find robotnik_wam_description)/urdf/wam_guardian.urdf.xacro"/>
+   
+
+  <!-- arm -->
+  <xacro:wam_arm name="arm" parent="base_link">
+    <origin xyz="0.0 0.0 0.382" rpy="0 0 0" />
+  </xacro:wam_arm>
+
+
+</robot>
+

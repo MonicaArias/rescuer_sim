@@ -1,0 +1,62 @@
+<launch>
+
+
+  <!-- roslaunch arguments -->
+  <arg name="debug" default="false"/>
+  <arg name="gui" default="true"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="false" />
+    <arg name="use_sim_time" value="true"/>
+    <arg name="headless" value="false"/>
+  </include>
+
+<!-- Load joint controller configurations from YAcd .ML file to parameter server -->
+  <rosparam file="$(find guardian_control)/config/guardian_control.yaml" command="load"/>
+
+<group ns="guardian">
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" />
+         
+  <!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model guardian -param robot_description"/>
+
+  <!-- ros_control guardian launch file -->
+  <!--include file="$(find guardian_control)/launch/guardian_control.launch" /-->
+<!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/guardian" args="--namespace=/guardian
+                      joint_blw_velocity_controller
+                      joint_brw_velocity_controller
+                      joint_frw_velocity_controller
+                      joint_flw_velocity_controller
+                      joint_pan_position_controller
+                      joint_tilt_position_controller
+                      joint_read_state_controller --timeout 50
+                      "/>
+
+  
+  <!-- once the joint_state is published, run the robot_state_publisher, the namespace has to be adapted --> 
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/guardian/joint_states" />
+  </node>
+
+  </group>
+
+ 
+
+
+  <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
+  <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard"  output="screen">
+    <param name="scale_linear" value="0.5" type="double"/>
+    <param name="scale_angular" value="1.5" type="double"/>
+    <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/guardian/cmd_vel"/>
+  </node>
+</launch>
