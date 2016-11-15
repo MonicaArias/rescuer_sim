@@ -7,7 +7,7 @@
 
   <!-- arm -->
   <xacro:wam_arm name="arm" parent="base_link">
-    <origin xyz="0.0 0.0 0.382" rpy="0 0 0" />
+    <origin xyz="0.23 0.0 0.373" rpy="0 0 0" />
   </xacro:wam_arm>
 
 

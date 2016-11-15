@@ -10,12 +10,12 @@
 <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
 <node pkg="nodelet" type="nodelet" name="navigation_velocity_smoother" args="load yocs_velocity_smoother/VelocitySmootherNodelet /mobile_base_nodelet_manager">
     <rosparam file="$(find guardian_navigation)/navigation_config/smoother.yaml" command="load"/>
-    <remap from="navigation_velocity_smoother/smooth_cmd_vel" to="/guardian/cmd_vel"/>
-    <remap from="navigation_velocity_smoother/raw_cmd_vel" to="/guardian/raw_cmd_vel"/>
+    <remap from="navigation_velocity_smoother/smooth_cmd_vel" to="/gwam/cmd_vel"/>
+    <remap from="navigation_velocity_smoother/raw_cmd_vel" to="/gwam/raw_cmd_vel"/>
 
     <!-- Robot velocity feedbacks; use the default base configuration -->
-    <remap from="navigation_velocity_smoother/odometry" to="/guardian/odom"/>
-    <remap from="navigation_velocity_smoother/robot_cmd_vel" to="/guardian/cmd_vel"/>
+    <remap from="navigation_velocity_smoother/odometry" to="/gwam/odom"/>
+    <remap from="navigation_velocity_smoother/robot_cmd_vel" to="/gwam/cmd_vel"/>
   </node>
 
 
@@ -33,8 +33,8 @@
 
   <!-- Run move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <remap from="cmd_vel" to="/guardian/raw_cmd_vel" />
-    <remap from="odom" to="/guardian/odom"/>
+    <remap from="cmd_vel" to="/gwam/raw_cmd_vel" />
+    <remap from="odom" to="/gwam/odom"/>
     <remap from="scan" to="/scan"/>
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="local_costmap" />

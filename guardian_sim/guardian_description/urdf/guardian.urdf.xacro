@@ -56,7 +56,8 @@
   <!-- BASE_LINK (RED) -->
   <link name="base_link">
     <inertial>
-      <mass value="95.0" />
+      <mass value="15.0" />
+      <!--mass value="95.0" /-->
       <origin xyz="0 0 0" />
       <inertia  ixx="3.737" ixy="0.008"  ixz="-0.144"  iyy="8.311"  iyz="-0.004"  izz="8.893" />
     </inertial>
@@ -337,19 +338,45 @@
 
 
 	<!-- KINECT CAMERA -->
-  <!--joint name="camera_joint" type="fixed">
+ <joint name="camera_joint" type="fixed">
      <axis xyz="0 1 0" />
-     <origin xyz="0.5 0 0.31"/>
+     <origin xyz="0.5 0 0.31" rpy="0 0 0"/>
      <parent link="base_link"/>
      <child link="camera_link"/>
   </joint>
   <link name="camera_link">
+<visual>
+	     <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+	      <geometry>
+	       <mesh filename="package://guardian_description/meshes/sensors/kinect.dae"/>
+	      </geometry>
+	    </visual>
+		  <collision>
+	      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+		    <geometry>
+		      <box size="0.07271 0.27794 0.073"/>
+		    </geometry>
+		  </collision>
      <inertial>
        <mass value="0.001" />
        <origin xyz="0 0 0" rpy="0 0 0" />
        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
     </inertial>
-  </link-->
+  </link>
+<joint name="camera_optical_frame_joint" type="fixed">
+		  <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+		  <parent link="camera_link" />
+		  <child link="camera_optical_frame" />
+		</joint>
+		<link name="camera_optical_frame">
+	    <inertial>
+	      <mass value="0.001" />
+	      <origin xyz="0 0 0" />
+	      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+	               iyy="0.0001" iyz="0.0"
+	               izz="0.0001" />
+	    </inertial>
+		</link>
 
 
   <!-- HOKUYO REAR SENSOR -->
